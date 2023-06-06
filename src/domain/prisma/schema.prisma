@@ -30,7 +30,6 @@ model chi_tiet_loai_cong_viec {
   cong_viec      cong_viec[]
 
   @@index([id_loai], map: "id_loai")
-  
 }
 
 model cong_viec {
@@ -66,8 +65,8 @@ model nguoi_dung {
   password       String           @db.Text
   dien_thoai     String?          @db.VarChar(45)
   ngay_sinh      DateTime?        @db.DateTime(0)
-  gioi_tinh      Int?             @default(0) @db.TinyInt
-  role           String           @db.VarChar(20)
+  gioi_tinh      String?          @db.VarChar(10)
+  role           String           @default("user") @db.VarChar(20)
   ky_nang        String?          @db.VarChar(255)
   chung_chi      String?          @db.Text
   binh_luan      binh_luan[]

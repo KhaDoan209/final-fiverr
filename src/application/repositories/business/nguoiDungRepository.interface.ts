@@ -1,4 +1,4 @@
-import { NguoiDung } from "../interface/nguoiDung.interface";
+import { NguoiDung } from "../../interface/business/nguoiDung.interface";
 
 export interface NguoiDungRepository {
    getListNguoiDung(): Promise<NguoiDung>;

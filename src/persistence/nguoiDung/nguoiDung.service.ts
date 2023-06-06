@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { NguoiDung } from 'src/application/interface/nguoiDung.interface';
-import { NguoiDungRepository } from 'src/application/repositories/nguoiDungRepository.interface';
+import { NguoiDung } from 'src/application/interface/business/nguoiDung.interface';
+import { NguoiDungRepository } from 'src/application/repositories/business/nguoiDungRepository.interface';
 import { PrismaService } from 'src/infrastructure/config/prisma/prisma.service';
 
 

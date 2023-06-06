@@ -7,6 +7,6 @@ export interface NguoiDung {
    ngay_sinh: string;
    gioi_tinh: string;
    role: string;
-   ky_nang: string;
+   ky_nang: Array<string>;
    chung_chi: string
 }
