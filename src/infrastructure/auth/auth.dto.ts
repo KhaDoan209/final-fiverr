@@ -22,8 +22,8 @@ export class AuthRegisterDto {
    @IsString()
    readonly ten: string
 
-   @IsNumber()
-   readonly gioi_tinh: number
+   @IsString()
+   readonly gioi_tinh: string
 
    readonly role: string | any
 

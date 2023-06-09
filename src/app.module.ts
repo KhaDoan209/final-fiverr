@@ -5,14 +5,23 @@ import { LoginMiddleware } from './shared/middlewares/validation/authValidation/
 import { RegisterMiddleware } from './shared/middlewares/validation/authValidation/register.middleware';
 import { EnvironmentConfigModule } from './infrastructure/config/environment/environment.module';
 import { TokenAuthMiddleware } from './shared/middlewares/jwt/token.middleware';
-import { APP_GUARD } from '@nestjs/core';
+import { RequestMethod } from '@nestjs/common';
+import { UserMiddleware } from './shared/middlewares/validation/userValidation/user.middleware';
 @Module({
   imports: [PersistenceModule, AuthModule, EnvironmentConfigModule.register()],
 })
 
 export class AppModule implements NestModule {
+
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(TokenAuthMiddleware).exclude('auth/(login|register)').forRoutes('*')
+    consumer.apply(TokenAuthMiddleware).exclude(
+      { path: 'auth/(login|register)', method: RequestMethod.ALL },
+      { path: 'user/check-existed-email', method: RequestMethod.ALL }
+    ).forRoutes('*')
+    consumer.apply(UserMiddleware).exclude(
+      { path: 'auth/(login|register)', method: RequestMethod.ALL },
+      { path: 'user/check-existed-email', method: RequestMethod.ALL }
+    ).forRoutes('*')
     consumer.apply(LoginMiddleware).forRoutes('auth/login')
     consumer.apply(RegisterMiddleware).forRoutes('auth/register')
   }

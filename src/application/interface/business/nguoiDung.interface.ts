@@ -1,3 +1,4 @@
+
 export interface NguoiDung {
    id: number;
    ten: string;
@@ -8,5 +9,5 @@ export interface NguoiDung {
    gioi_tinh: string;
    role: string;
    ky_nang: Array<string>;
-   chung_chi: string
+   chung_chi: Array<string>;
 }
