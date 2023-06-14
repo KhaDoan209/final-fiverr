@@ -10,21 +10,20 @@ export class UserMiddleware implements NestMiddleware {
    }
    use(req: Request, res: Response, next: NextFunction) {
       const token = req.headers.authorization;
-      const parseParamToString = req.params[0].split('/')
-      const idParam = Number(parseParamToString[parseParamToString.length - 1])
+      const idUser = Number(req.params.id)
       const bearerPrefix = 'Bearer ';
       let newToken = ""
       if (token && token.startsWith(bearerPrefix)) {
          newToken = token.substring(bearerPrefix.length);
       }
-      if (idParam) {
+      if (idUser) {
          try {
             const decodedToken: any = jwt.verify(newToken, this.config.getJwtSecret())
             const { id, role } = decodedToken.data
             if (role === Role.Admin) {
                next();
             } else {
-               if (role === Role.User && id === idParam) {
+               if (role === Role.User && id === idUser) {
                   next();
                }
                else {

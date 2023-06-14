@@ -6,8 +6,7 @@ import { Roles } from 'src/shared/decorators/roles.decorator';
 import { HttpStatus } from '@nestjs/common';
 import { CreateNguoiDungAdminDTO } from 'src/application/dto/nguoiDungDto';
 import { UpdateNguoiDungDTO } from 'src/application/dto/nguoiDungDto';
-import { FileInterceptor } from '@nestjs/platform-express';
-import { diskStorage } from 'multer';
+
 
 
 @Controller('user')
@@ -81,7 +80,7 @@ export class NguoiDungController {
 
 
    @Put('/update-user-information/:id')
-   async updateUserInformation(@Body() userInformation: UpdateNguoiDungDTO, @Request() request: any, @Param('id') userIdToUpdate: number) {
+   async updateUserInformation(@Body(new ValidationPipe()) userInformation: UpdateNguoiDungDTO, @Request() request: any, @Param('id') userIdToUpdate: number) {
       try {
          const { id, role } = request.user.data
          if (role === Role.Admin) {
@@ -123,27 +122,13 @@ export class NguoiDungController {
    }
 
    @Patch('/change-password/:id')
-   async changePassword(@Param('id') userId: number, @Req() request: any, @Body() body: string) {
+   async changePassword(@Param('id') userId: number, @Body() body: any) {
       try {
-         const { id, role } = request.user.data
-         if (role === Role.Admin) {
-            let data = await this.nguoiDungService.changePassword(+userId, body)
-            if (typeof data !== "string") {
-               return customResponse(data, HttpStatus.CREATED, "Cập nhật password thành công")
-            } else {
-               return customResponse(data, HttpStatus.NOT_FOUND, data)
-            }
+         let data = await this.nguoiDungService.changePassword(+userId, body.password)
+         if (typeof data !== "string") {
+            return customResponse(data, HttpStatus.OK, "Cập nhật password thành công")
          } else {
-            if (id !== userId) {
-               return customResponse(null, HttpStatus.FORBIDDEN, "Bạn không có quyền cập nhật password của người khác")
-            } else {
-               let data = await this.nguoiDungService.changePassword(+userId, body)
-               if (typeof data !== "string") {
-                  return customResponse(data, HttpStatus.CREATED, "Cập nhật password thành công")
-               } else {
-                  return customResponse(data, HttpStatus.NOT_FOUND, data)
-               }
-            }
+            return customResponse(data, HttpStatus.NOT_FOUND, data)
          }
       } catch (error) {
          return customResponse(error.message, HttpStatus.INTERNAL_SERVER_ERROR, "Lỗi Backend")

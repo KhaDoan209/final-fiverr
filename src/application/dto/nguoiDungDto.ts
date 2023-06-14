@@ -60,10 +60,10 @@ export class UpdateNguoiDungDTO {
    @IsString()
    gioi_tinh: string;
 
-   @IsString()
+   @IsArray()
    ky_nang: Array<string>;
 
-   @IsString()
+   @IsArray()
    chung_chi: Array<string>;
 }
 
