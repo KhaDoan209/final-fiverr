@@ -7,7 +7,6 @@ import { Role } from 'src/domain/enums/role.enum';
 @Injectable()
 export class UserMiddleware implements NestMiddleware {
    constructor(private readonly config: EnvironmentConfigService) {
-
    }
    use(req: Request, res: Response, next: NextFunction) {
       const token = req.headers.authorization;

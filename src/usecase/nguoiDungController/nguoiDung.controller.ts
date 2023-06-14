@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param, Delete, UseGuards, Res, Query, ValidationPipe, Put, Request, Patch, Req } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, UseGuards, Res, Query, ValidationPipe, Put, Request, Patch, Req, UseInterceptors, UploadedFile } from '@nestjs/common';
 import { customResponse } from 'src/shared/response/customResponse';
 import { NguoiDungService } from 'src/persistence/nguoiDung/nguoiDung.service';
 import { Role } from 'src/domain/enums/role.enum';
@@ -6,6 +6,8 @@ import { Roles } from 'src/shared/decorators/roles.decorator';
 import { HttpStatus } from '@nestjs/common';
 import { CreateNguoiDungAdminDTO } from 'src/application/dto/nguoiDungDto';
 import { UpdateNguoiDungDTO } from 'src/application/dto/nguoiDungDto';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
 
 
 @Controller('user')
@@ -51,7 +53,7 @@ export class NguoiDungController {
       }
    }
 
-   @Get('search-user-by-name')
+   @Get('/search-user-by-name')
    async searchUserByEmail(@Query() query: any): Promise<any> {
       try {
          const { ten } = query
@@ -61,7 +63,6 @@ export class NguoiDungController {
          return customResponse(error.message, HttpStatus.INTERNAL_SERVER_ERROR, "Lỗi Backend")
       }
    }
-
 
    @Roles(Role.Admin)
    @Post('/create-user')
@@ -77,6 +78,7 @@ export class NguoiDungController {
          return customResponse(error.message, HttpStatus.INTERNAL_SERVER_ERROR, "Lỗi Backend")
       }
    }
+
 
    @Put('/update-user-information/:id')
    async updateUserInformation(@Body() userInformation: UpdateNguoiDungDTO, @Request() request: any, @Param('id') userIdToUpdate: number) {

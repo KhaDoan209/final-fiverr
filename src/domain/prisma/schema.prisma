@@ -35,7 +35,7 @@ model chi_tiet_loai_cong_viec {
 model cong_viec {
   id                      Int                      @id @default(autoincrement())
   ten_cong_viec           String?                  @db.VarChar(255)
-  danh_gia                String?                  @db.VarChar(255)
+  danh_gia                Int?
   gia_tien                Decimal?                 @db.Decimal(10, 2)
   hinh_anh                String?                  @db.Text
   mo_ta                   String?                  @db.Text

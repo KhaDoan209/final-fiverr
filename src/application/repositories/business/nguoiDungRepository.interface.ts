@@ -9,4 +9,5 @@ export interface NguoiDungRepository {
    updateUserInformation(data: UpdateNguoiDungDTO, userIdToUpdate: number): Promise<any>;
    deleteUser(id: number): Promise<any>
    changePassword(id: number, data: string): Promise<any>;
+
 }

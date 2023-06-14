@@ -32,7 +32,7 @@ export class NguoiDungService implements NguoiDungRepository {
       }
 
    }
-
+ 
    async searchUserByName(name: string): Promise<any> {
       let data = await this.prisma.usePrisma().nguoi_dung.findMany({
          where: {

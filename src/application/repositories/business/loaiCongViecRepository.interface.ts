@@ -1,7 +1,8 @@
 import { CreateLoaiCongViecDTO, UpdateLoaiCongViecDTO } from "src/application/dto/loaiCongViecDto";
 export interface LoaiCongViecRepository {
-   getListJobTitle(pageNumber: number): Promise<any>;
-   createNewJobTitle(data: CreateLoaiCongViecDTO): Promise<any>;
-   updateJobTitle(data: UpdateLoaiCongViecDTO): Promise<any>
-   deleteJobTitle(id: number): Promise<any>
+   getListJobType(pageNumber: number): Promise<any>;
+   getJobTypeDetail(id: number): Promise<any>;
+   createNewJobType(data: CreateLoaiCongViecDTO): Promise<any>;
+   updateJobType(data: UpdateLoaiCongViecDTO, id: number): Promise<any>
+   deleteJobType(id: number): Promise<any>
 }
