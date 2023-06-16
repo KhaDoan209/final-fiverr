@@ -4,11 +4,12 @@ import { NguoiDungService } from 'src/persistence/nguoiDung/nguoiDung.service';
 import { Role } from 'src/domain/enums/role.enum';
 import { Roles } from 'src/shared/decorators/roles.decorator';
 import { HttpStatus } from '@nestjs/common';
-import { CreateNguoiDungAdminDTO } from 'src/application/dto/nguoiDungDto';
+import { ChangePasswordDTO, CreateNguoiDungAdminDTO } from 'src/application/dto/nguoiDungDto';
 import { UpdateNguoiDungDTO } from 'src/application/dto/nguoiDungDto';
+import { ApiTags, ApiBearerAuth, ApiQuery, ApiBody } from '@nestjs/swagger/dist/decorators';
 
-
-
+@ApiTags('Nguoi Dung')
+@ApiBearerAuth()
 @Controller('user')
 export class NguoiDungController {
    constructor(private readonly nguoiDungService: NguoiDungService) {
@@ -44,7 +45,6 @@ export class NguoiDungController {
    async checkExistedEmail(@Query() query: any, @Res() response: any): Promise<any> {
       try {
          const { userEmail } = query
-         console.log(userEmail);
          let data = await this.nguoiDungService.checkExistedEmail(userEmail)
          return response.send(customResponse(null, HttpStatus.OK, data))
       } catch (error) {
@@ -53,6 +53,7 @@ export class NguoiDungController {
    }
 
    @Get('/search-user-by-name')
+   @ApiQuery({ name: "user name", type: "string" })
    async searchUserByEmail(@Query() query: any): Promise<any> {
       try {
          const { ten } = query
@@ -122,6 +123,7 @@ export class NguoiDungController {
    }
 
    @Patch('/change-password/:id')
+   @ApiBody({ type: ChangePasswordDTO })
    async changePassword(@Param('id') userId: number, @Body() body: any) {
       try {
          let data = await this.nguoiDungService.changePassword(+userId, body.password)

@@ -8,15 +8,15 @@ export class CongViecService implements CongViecRepository {
    ) {
    }
    async getJobList(pageNumber: number = 1): Promise<any> {
-      let pageSize = 2
-      const index = (pageNumber - 1) * pageSize
+      let pageSize = 10
+      const index = ((+pageNumber) - 1) * pageSize
       let data = await this.prisma.usePrisma().cong_viec.findMany({
          skip: index,
          take: pageSize,
       });
       return {
          data: data,
-         page: pageNumber
+         page: +pageNumber
       }
    }
 
@@ -61,6 +61,27 @@ export class CongViecService implements CongViecRepository {
          }
       })
       return data
+   }
+
+   async getJobListByName(name: string): Promise<any> {
+      const congViec = await this.prisma.usePrisma().cong_viec.findMany({
+         where: {
+            OR: [
+               {
+                  ten_cong_viec: {
+                     contains: name
+                  }
+               },
+               {
+                  ten_cong_viec: {
+                     startsWith: name
+                  }
+               }
+            ]
+
+         }
+      });
+      return congViec
    }
 
    async createNewJob(data: CreateCongViecDTO): Promise<any> {

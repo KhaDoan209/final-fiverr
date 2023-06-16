@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ChiTietLoaiCongViecService } from './chiTietLoaiCongViec.service';
-import { ChiTietLoaiCongViecController } from '../../usecase/chiTietLoaiCongViec.Controller/chiTietLoaiCongViec.controller';
+import { ChiTietLoaiCongViecController } from '../../usecase/chiTietLoaiCongViecController/chiTietLoaiCongViec.controller';
 import { PrismaModule } from 'src/infrastructure/config/prisma/prisma.module';
 
 @Module({

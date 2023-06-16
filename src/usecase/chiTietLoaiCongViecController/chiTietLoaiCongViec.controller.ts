@@ -1,5 +1,5 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, HttpStatus, Res, UseInterceptors, Req } from '@nestjs/common';
-import { CreateChiTietLoaiCongViecDTO, UpdateChiTietLoaiCongViecDTO } from 'src/application/dto/chiTietLoaiCongViec.Dto';
+import { CreateChiTietLoaiCongViecDTO, UpdateChiTietLoaiCongViecDTO } from 'src/application/dto/chiTietLoaiCongViecDto';
 import { customResponse } from 'src/shared/response/customResponse';
 import { ChiTietLoaiCongViecService } from '../../persistence/chiTietLoaiCongViec/chiTietLoaiCongViec.service';
 import { FileInterceptor, } from '@nestjs/platform-express';
@@ -7,8 +7,10 @@ import { Put, UploadedFile } from '@nestjs/common/decorators';
 import { diskStorage } from 'multer';
 import { Roles } from 'src/shared/decorators/roles.decorator';
 import { Role } from 'src/domain/enums/role.enum';
+import { ApiTags, ApiBearerAuth } from '@nestjs/swagger/dist/decorators';
 
-
+@ApiTags('Chi Tiet Loai Cong Viec')
+@ApiBearerAuth()
 @Controller('job-type-detail')
 export class ChiTietLoaiCongViecController {
   constructor(private readonly chiTietLoaiCongViecService: ChiTietLoaiCongViecService
@@ -39,8 +41,7 @@ export class ChiTietLoaiCongViecController {
       return customResponse(error.message, HttpStatus.INTERNAL_SERVER_ERROR, "Lỗi Backend")
     }
   }
-
-
+  @Roles(Role.Admin)
   @Post('/create-new-job-type-detail')
   @UseInterceptors(FileInterceptor("file", {
     storage: diskStorage({
@@ -61,7 +62,7 @@ export class ChiTietLoaiCongViecController {
     }
   }
 
-
+  @Roles(Role.Admin)
   @Post('/update-avatar/:id')
   @UseInterceptors(FileInterceptor("file", {
     storage: diskStorage({
@@ -69,6 +70,7 @@ export class ChiTietLoaiCongViecController {
       filename: (req, file, callback) => callback(null, Date.now() + "_" + file.originalname),
     })
   }))
+  
   async updateJobTypeDetailAvatar(@Param('id') id: number, @UploadedFile() file: Express.Multer.File) {
     try {
       let data = await this.chiTietLoaiCongViecService.updateJobTypeDetailAvatar(file, +id)
@@ -82,6 +84,7 @@ export class ChiTietLoaiCongViecController {
     }
   }
 
+  @Roles(Role.Admin)
   @Put('/update-job-type-detail/:id')
   async updateJobDetailInfor(@Param('id') id: number, @Body() body: UpdateChiTietLoaiCongViecDTO) {
     try {
@@ -96,6 +99,7 @@ export class ChiTietLoaiCongViecController {
     }
   }
 
+  @Roles(Role.Admin)
   @Delete('/detail-job-type-detail/:id')
   async deleteJobDetailInfor(@Param('id') id: number) {
     try {

@@ -4,10 +4,12 @@ import { Role } from 'src/domain/enums/role.enum';
 import { Roles } from 'src/shared/decorators/roles.decorator';
 import { customResponse } from 'src/shared/response/customResponse';
 import { HttpStatus } from '@nestjs/common';
-import { identity } from 'rxjs';
 import { CreateLoaiCongViecDTO, UpdateLoaiCongViecDTO } from 'src/application/dto/loaiCongViecDto';
 
+import { ApiTags, ApiBearerAuth } from '@nestjs/swagger/dist/decorators';
 
+@ApiTags('Loai Cong Viec')
+@ApiBearerAuth()
 @Controller('job-type')
 export class LoaiCongViecController {
   constructor(private readonly loaiCongViecService: LoaiCongViecService) { }

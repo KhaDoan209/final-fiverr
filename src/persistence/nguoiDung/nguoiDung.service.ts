@@ -11,7 +11,7 @@ export class NguoiDungService implements NguoiDungRepository {
    }
    async getUserList(pageNumber: number = 1): Promise<any> {
       let pageSize = 2
-      const index = (pageNumber - 1) * pageSize;
+      const index = ((+pageNumber) - 1) * pageSize;
       let data = await this.prisma.usePrisma().nguoi_dung.findMany({
          skip: index,
          take: pageSize,
@@ -19,7 +19,7 @@ export class NguoiDungService implements NguoiDungRepository {
       const userDtos = plainToInstance(NguoiDungDTO, data)
       return {
          data: userDtos,
-         page: pageNumber
+         page: +pageNumber
       }
    }
 
@@ -32,7 +32,7 @@ export class NguoiDungService implements NguoiDungRepository {
       }
 
    }
- 
+
    async searchUserByName(name: string): Promise<any> {
       let data = await this.prisma.usePrisma().nguoi_dung.findMany({
          where: {

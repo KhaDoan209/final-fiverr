@@ -1,7 +1,7 @@
 import { CreateNguoiDungAdminDTO } from "src/application/dto/nguoiDungDto";
 import { UpdateNguoiDungDTO } from "src/application/dto/nguoiDungDto";
 export interface NguoiDungRepository {
-   getUserList(pageSize: number): Promise<any>;
+   getUserList(pageNumber: number): Promise<any>;
    getUserDetail(id: number): Promise<any>;
    checkExistedEmail(email: string): Promise<any>;
    searchUserByName(email: string): Promise<any>;

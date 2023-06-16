@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { CreateChiTietLoaiCongViecDTO, UpdateChiTietLoaiCongViecDTO } from 'src/application/dto/chiTietLoaiCongViec.Dto';
+import { CreateChiTietLoaiCongViecDTO, UpdateChiTietLoaiCongViecDTO } from 'src/application/dto/chiTietLoaiCongViecDto';
 import { ChiTietLoaiCongViecRepository } from 'src/application/repositories/business/chiTietLoaiCongViecRepository.interface';
 import { PrismaService } from 'src/infrastructure/config/prisma/prisma.service';
 

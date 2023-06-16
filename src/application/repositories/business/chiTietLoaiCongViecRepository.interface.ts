@@ -1,4 +1,4 @@
-import { CreateChiTietLoaiCongViecDTO, UpdateChiTietLoaiCongViecDTO } from "src/application/dto/chiTietLoaiCongViec.Dto";
+import { CreateChiTietLoaiCongViecDTO, UpdateChiTietLoaiCongViecDTO } from "src/application/dto/chiTietLoaiCongViecDto";
 export interface ChiTietLoaiCongViecRepository {
    getListJobTypeDetail(pageNumber: number): Promise<any>;
    getJobTypeDetailById(id: number): Promise<any>;

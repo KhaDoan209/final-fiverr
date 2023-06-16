@@ -3,7 +3,11 @@ import { CongViecService } from '../../persistence/congViec/congViec.service';
 import { customResponse } from 'src/shared/response/customResponse';
 import { HttpStatus } from '@nestjs/common/enums';
 import { CreateCongViecDTO, UpdateCongViecDTO } from 'src/application/dto/congViecDto';
+import { ApiTags, ApiBearerAuth, ApiQuery, ApiBody } from '@nestjs/swagger/dist/decorators';
 
+
+@ApiBearerAuth()
+@ApiTags('Cong Viec')
 @Controller('job')
 export class CongViecController {
   constructor(private readonly congViecService: CongViecService) { }
@@ -44,6 +48,19 @@ export class CongViecController {
     }
   }
 
+  @Get('/get-job-list-by-name')
+  @ApiQuery({ name: "job name", type: "string" })
+  async getJobListByName(@Query() query: any) {
+    try {
+      const { jobName } = query
+      const data = await this.congViecService.getJobListByName(jobName)
+      return customResponse(data, HttpStatus.OK, "Lấy danh sách công việc theo chi tiết loại thành công")
+    } catch (error) {
+      return customResponse(error.message, HttpStatus.INTERNAL_SERVER_ERROR, "Lỗi Backend")
+    }
+  }
+
+
   @Post('/create-new-job')
   async createNewJob(@Body(new ValidationPipe()) body: CreateCongViecDTO) {
     try {
@@ -58,6 +75,7 @@ export class CongViecController {
     }
   }
 
+
   @Put('/update-job-information/:id')
   async updateJobInformation(@Param('id') jobId: number, @Body(new ValidationPipe()) body: UpdateCongViecDTO) {
     try {
@@ -71,6 +89,7 @@ export class CongViecController {
       return customResponse(error.message, HttpStatus.INTERNAL_SERVER_ERROR, "Lỗi Backend")
     }
   }
+
 
   @Delete('/delete-job/:id')
   async deleteJob(@Param('id') id: number) {

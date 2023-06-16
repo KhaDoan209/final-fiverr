@@ -1,6 +1,5 @@
 import { Injectable, NestMiddleware } from '@nestjs/common';
 import { Request, Response, NextFunction } from 'express';
-import { HttpException, HttpStatus } from '@nestjs/common';
 import * as jwt from 'jsonwebtoken';
 import { EnvironmentConfigService } from 'src/infrastructure/config/environment/environment.service';
 import { PrismaClient } from '@prisma/client';
